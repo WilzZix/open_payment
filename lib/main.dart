@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:open_pay/components/header_widget.dart';
+import 'package:open_pay/components/title_widget.dart';
+import 'package:open_pay/components/transport_card.dart';
 
 import 'components/payment_card.dart';
 
@@ -28,24 +30,7 @@ class _MyAppState extends State<MyApp> {
               child: Scaffold(
                 body: CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Icon(
-                              Icons.person,
-                              color: Colors.white,
-                            ),
-                            Icon(
-                              Icons.notifications,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    const HeaderWidget(),
                     const SliverToBoxAdapter(
                       child: SizedBox(height: 30),
                     ),
@@ -151,27 +136,46 @@ class _MyAppState extends State<MyApp> {
                                 const SizedBox(
                                   height: 32,
                                 ),
-                                Row(
-                                  children: const [
-                                    Text(
-                                      'Транспорт',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w800),
-                                    ),
-                                    SizedBox(
-                                      width: 6,
-                                    ),
-                                    Icon(
-                                      Icons.expand_more,
-                                      color: Color(0xFF42C999),
-                                    )
-                                  ],
+                                const TitleWidget(
+                                  title: 'Транспорт',
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
-                                const TransportCard(),
+                                SizedBox(
+                                  height: 120,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: const [
+                                      TransportCard(
+                                          summ: '4,500.00 млн.сум',
+                                          title: 'Доходы',
+                                          period: 'за май'),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      TransportCard(
+                                        period: 'за май',
+                                        summ: '4,500.00 млн.сум',
+                                        title: 'Расходы',
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                const TitleWidget(
+                                  title: 'Счета',
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                const BankCards(),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                const BankCards(),
                               ],
                             ),
                           ),
@@ -187,15 +191,15 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class TransportCard extends StatelessWidget {
-  const TransportCard({
+class BankCards extends StatelessWidget {
+  const BankCards({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 112,
+      height: 88,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: Colors.white,
@@ -216,30 +220,36 @@ class TransportCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              'Доходы',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Text(
+                  'Расчетный',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFFA2A0A8)),
+                ),
+                Text(
+                  '••7852',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFFA2A0A8),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
-            Text(
+            const Text(
               '4,500.00 млн.сум',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              'за май',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFFA2A0A8)),
             ),
           ],
         ),
